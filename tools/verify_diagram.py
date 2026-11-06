@@ -27,6 +27,7 @@ Checks (mirror tools/verifyDiagram.md + conventions.md):
  28  Submodule inputs enter on the left edge, outputs leave on the right edge
  29  Every submodule labels its ports
  30  Rounded-rectangle corners are a small fixed radius (name clears the arc)
+ 33  No wire/shape is z-order-hidden beneath a later, opaquely-filled container
 """
 import sys, re, html, base64, zlib, urllib.parse, statistics, math
 import xml.etree.ElementTree as ET
@@ -795,6 +796,49 @@ def run(path):
                     bad.append(f"dense cluster ~({x0:.0f}-{x0 + CELL:.0f}, {y0:.0f}-{y0 + CELL:.0f}) "
                                f"load {load[cy][cx]:.0f} > {MAXLOAD:.0f} (spread it into the empty space)")
     log.check(not bad, 32, "No congested hotspot (dense cluster while whitespace is wasted)", bad)
+
+    # 33 Drawio paints cells in DOCUMENT order, not visual/logical nesting order:
+    #    a container (module box / CDC-domain colour patch) with an opaque fill
+    #    declared AFTER a shape or wire that geometrically sits inside it will
+    #    paint solid colour on TOP of that shape/wire, making it vanish from the
+    #    render -- while every geometry-only check above (incl. "floating shape"
+    #    and "inputs/outputs on the boundary") still PASSES, because those only
+    #    look at coordinates, never at XML order. This is exactly the bug class
+    #    that let a cross-module wire silently disappear under a later-declared
+    #    domain box in CDC_RECONV_fifo_rd_srst3.drawio. Rule: every container
+    #    must be declared BEFORE any shape, wire, or nested container whose
+    #    geometry falls inside it (conventions: containers/domains first, their
+    #    contents after -- outer module, then each nested container outer-to-
+    #    inner, then the shapes/wires/labels that live or route inside them).
+    order = {cid: i for i, cid in enumerate(cells.keys())}
+    opaque_conts = [cont for cont in conts if sattr(cont.style, "fillColor") not in (None, "none")]
+    bad = []
+    for cont in opaque_conts:
+        cb, idx = bbox(cont), order[cont.id]
+        for other in conts:
+            if other is cont or order[other.id] >= idx:
+                continue
+            if inside(bbox(other), cb, tol=0.5):
+                bad.append(f"container '{strip(other.value) or '(unnamed)'}' is declared before, and nested "
+                           f"inside, container '{strip(cont.value) or '(unnamed)'}' -- its fill will be "
+                           f"painted over; move '{strip(cont.value) or '(unnamed)'}' earlier")
+        for s in shapes:
+            if order[s.id] >= idx:
+                continue
+            if overlap(bbox(s), cb):
+                bad.append(f"shape {tuple(round(v) for v in bbox(s))} is declared before container "
+                           f"'{strip(cont.value) or '(unnamed)'}' it sits inside -- it will be painted over; "
+                           f"move the container earlier")
+        for e in edges:
+            if order[e.id] >= idx:
+                continue
+            for (x1, y1), (x2, y2) in zip(e.pts, e.pts[1:]):
+                if seg_hits_rect(x1, y1, x2, y2, cb, SHAPE_INSET):
+                    bad.append(f"wire {e.id} segment ({x1:.0f},{y1:.0f})-({x2:.0f},{y2:.0f}) is declared "
+                               f"before container '{strip(cont.value) or '(unnamed)'}' it routes through -- "
+                               f"it will be painted over and vanish from the render; move the container earlier")
+                    break
+    log.check(not bad, 33, "No wire/shape is z-order-hidden beneath a later, opaquely-filled container", bad)
 
     passed = log.total - log.fail
     print(f"\n{'ALL %d CHECKS PASSED' % log.total if log.fail == 0 else f'{log.fail}/{log.total} CHECKS FAILED'}")

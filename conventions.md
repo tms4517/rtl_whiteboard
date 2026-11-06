@@ -71,6 +71,18 @@ visible.
    labels inside the FRONT card, left for inputs and right for outputs. The label
    sits inside the instance, so it needs NO wire stub beneath it — the verifier
    treats text inside a named instance box (single box or deck) as a port.
+11. Drawio renders `<mxCell>` elements in DOCUMENT order, not visual nesting
+   order: a later cell paints OVER an earlier one. Every container (a module box
+   or a CDC clock-domain colour patch) has an opaque fill, so it MUST be declared
+   in the XML BEFORE any shape, wire, or nested container that geometrically sits
+   inside it — otherwise its fill silently paints over and hides that content in
+   the render, even though every coordinate-only check still passes. Order every
+   diagram outer-to-inner: the outer module box, then each nested container
+   (outer to inner), then the shapes/wires/labels that live or route inside them.
+   This applies per-module — repeat the container-first ordering for every
+   module box in the diagram, not just the first one. The verifier's z-order
+   check (and rendering + eyeballing the PNG, which is mandatory) catches a
+   violation of this rule.
 
 ### Arrows
 

@@ -28,6 +28,7 @@ Checks (mirror tools/verifyDiagram.md + conventions.md):
  29  Every submodule labels its ports
  30  Rounded-rectangle corners are a small fixed radius (name clears the arc)
  33  No wire/shape is z-order-hidden beneath a later, opaquely-filled container
+ 34  Wire endpoints penetrate a cloud shape's fill, not just its bounding box
 """
 import sys, re, html, base64, zlib, urllib.parse, statistics, math
 import xml.etree.ElementTree as ET
@@ -343,7 +344,13 @@ def run(path):
         for (x1, y1), (x2, y2) in zip(e.pts, e.pts[1:]):
             for s in shapes:
                 b = bbox(s)
-                if ((x1, y1) in eps and near_perim((x1, y1), b)) or ((x2, y2) in eps and near_perim((x2, y2), b)):
+                # a cloud's own wire deliberately penetrates its bbox interior
+                # (check 34) rather than stopping at the perimeter -- exempt a
+                # segment whose endpoint IS that true penetration point
+                is_cloud = "shape=cloud" in s.style
+                def _lands(pt):
+                    return near_perim(pt, b) or (is_cloud and pt_in(pt, b))
+                if ((x1, y1) in eps and _lands((x1, y1))) or ((x2, y2) in eps and _lands((x2, y2))):
                     continue
                 if seg_hits_rect(x1, y1, x2, y2, b, SHAPE_INSET):
                     bad.append(f"wire ({x1:.0f},{y1:.0f})-({x2:.0f},{y2:.0f}) crosses shape '{s.value or '(unnamed)'}'")
@@ -839,6 +846,39 @@ def run(path):
                                f"it will be painted over and vanish from the render; move the container earlier")
                     break
     log.check(not bad, 33, "No wire/shape is z-order-hidden beneath a later, opaquely-filled container", bad)
+
+    # 34 the drawio "shape=cloud" glyph is a scalloped silhouette INSET from its
+    #    own rectangular bounding box -- a wire landing exactly on the bbox edge,
+    #    or even a modest distance inside it, visibly stops short of the cloud's
+    #    actual outline and looks disconnected in the render, even though checks
+    #    4/5/6 (which only test the bbox) are satisfied. Require any wire
+    #    endpoint that lands at/inside a cloud's bbox to penetrate at least 20%
+    #    of the approached edge's dimension (width for a left/right approach,
+    #    height for a top/bottom one) so the arrow visibly reaches the cloud's
+    #    solid fill regardless of where on the scalloped boundary it lands.
+    #    Measured empirically: an exact bbox-edge landing leaves a large visible
+    #    gap at every tested height; a 20-25% inset reliably closes it.
+    CLOUD_INSET_FRAC = 0.20
+    clouds = [s for s in shapes if "shape=cloud" in s.style]
+    bad = []
+    for cl in clouds:
+        cb = bbox(cl)
+        w, h = cb[2] - cb[0], cb[3] - cb[1]
+        for e in edges:
+            for p in (e.pts[0], e.pts[-1]):
+                if not pt_in(p, cb, -TOL):
+                    continue
+                dl, dr, dt, db = p[0] - cb[0], cb[2] - p[0], p[1] - cb[1], cb[3] - p[1]
+                side, dist, dim = min(
+                    [("left", dl, w), ("right", dr, w), ("top", dt, h), ("bottom", db, h)],
+                    key=lambda t: t[1])
+                req = CLOUD_INSET_FRAC * dim
+                if dist < req:
+                    bad.append(f"wire {e.id} endpoint ({p[0]:.0f},{p[1]:.0f}) is only {dist:.0f}px "
+                               f"inside the {side} edge of cloud '{strip(cl.value) or '(unnamed)'}' "
+                               f"(need >= {req:.0f}px, {CLOUD_INSET_FRAC*100:.0f}% of that edge's "
+                               f"{'width' if side in ('left', 'right') else 'height'})")
+    log.check(not bad, 34, "Wire endpoints penetrate a cloud shape's fill, not just its bounding box", bad)
 
     passed = log.total - log.fail
     print(f"\n{'ALL %d CHECKS PASSED' % log.total if log.fail == 0 else f'{log.fail}/{log.total} CHECKS FAILED'}")

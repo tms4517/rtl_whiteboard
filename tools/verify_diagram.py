@@ -28,7 +28,7 @@ Checks (mirror tools/verifyDiagram.md + conventions.md):
  29  Every submodule labels its ports
  30  Rounded-rectangle corners are a small fixed radius (name clears the arc)
  33  No wire/shape is z-order-hidden beneath a later, opaquely-filled container
- 34  Wire endpoints penetrate a cloud shape's fill, not just its bounding box
+ 34  Wire endpoints reach a cloud shape's measured silhouette, not just its bbox
 """
 import sys, re, html, base64, zlib, urllib.parse, statistics, math
 import xml.etree.ElementTree as ET
@@ -848,37 +848,85 @@ def run(path):
     log.check(not bad, 33, "No wire/shape is z-order-hidden beneath a later, opaquely-filled container", bad)
 
     # 34 the drawio "shape=cloud" glyph is a scalloped silhouette INSET from its
-    #    own rectangular bounding box -- a wire landing exactly on the bbox edge,
-    #    or even a modest distance inside it, visibly stops short of the cloud's
-    #    actual outline and looks disconnected in the render, even though checks
-    #    4/5/6 (which only test the bbox) are satisfied. Require any wire
-    #    endpoint that lands at/inside a cloud's bbox to penetrate at least 20%
-    #    of the approached edge's dimension (width for a left/right approach,
-    #    height for a top/bottom one) so the arrow visibly reaches the cloud's
-    #    solid fill regardless of where on the scalloped boundary it lands.
-    #    Measured empirically: an exact bbox-edge landing leaves a large visible
-    #    gap at every tested height; a 20-25% inset reliably closes it.
-    CLOUD_INSET_FRAC = 0.20
+    #    own rectangular bounding box, and the depth of that inset varies a LOT
+    #    by position (deep near the top/bottom "valleys" between bumps, shallow
+    #    at the bump peaks around the vertical/horizontal midline). A flat 20%
+    #    inset is wrong in both directions: too shallow at the valleys (visible
+    #    gap) and absurdly deep at the peaks (arrow looks like it is floating
+    #    INSIDE the cloud, not touching its edge). Instead, check against the
+    #    cloud's actual measured silhouette: render an isolated cloud and scan
+    #    pixels column/row-wise to get the true boundary as a fraction of width
+    #    (for a left/right approach, indexed by height fraction) or height (for
+    #    a top/bottom approach, indexed by width fraction), sampled every 5%.
+    #    A wire must land at/past that measured boundary (plus a small fixed
+    #    margin for a visible overlap), not merely "far enough" by a flat rule.
+    #    Approach side is read from the PATH itself (the point adjacent to the
+    #    endpoint along the wire) rather than "nearest raw edge of the endpoint
+    #    alone" -- a shallow valley-entry can sit numerically closer to the
+    #    wrong edge (e.g. top) than to its true approach edge (e.g. left),
+    #    which a naive nearest-edge test would misclassify.
+    CLOUD_LEFT = [0.383, 0.277, 0.239, 0.216, 0.120, 0.050, 0.019, 0.004, 0.001, 0.013, 0.048,
+                  0.085, 0.049, 0.036, 0.039, 0.057, 0.090, 0.167, 0.319, 0.374, 0.518]
+    CLOUD_RIGHT = [0.421, 0.547, 0.784, 0.871, 0.912, 0.936, 0.946, 0.946, 0.938, 0.918, 0.931,
+                   0.967, 0.989, 0.999, 0.997, 0.979, 0.929, 0.807, 0.772, 0.714, 0.568]
+    CLOUD_TOP = [0.379, 0.251, 0.209, 0.190, 0.183, 0.082, 0.031, 0.007, 0.000, 0.006, 0.022,
+                 0.053, 0.095, 0.111, 0.096, 0.094, 0.105, 0.132, 0.180, 0.523, 0.662]
+    CLOUD_BOTTOM = [0.389, 0.734, 0.810, 0.842, 0.854, 0.841, 0.873, 0.930, 0.965, 0.985, 0.997,
+                    1.000, 0.996, 0.981, 0.958, 0.921, 0.863, 0.825, 0.813, 0.785, 0.673]
+    CLOUD_MARGIN = 3.0
+
+    def _cloud_lerp(table, frac):
+        frac = max(0.0, min(1.0, frac))
+        pos = frac * 20
+        i = int(pos)
+        if i >= 20:
+            return table[20]
+        t = pos - i
+        return table[i] * (1 - t) + table[i + 1] * t
+
     clouds = [s for s in shapes if "shape=cloud" in s.style]
     bad = []
     for cl in clouds:
         cb = bbox(cl)
         w, h = cb[2] - cb[0], cb[3] - cb[1]
         for e in edges:
-            for p in (e.pts[0], e.pts[-1]):
+            pts = e.pts
+            for idx in (0, -1):
+                p = pts[idx]
                 if not pt_in(p, cb, -TOL):
                     continue
-                dl, dr, dt, db = p[0] - cb[0], cb[2] - p[0], p[1] - cb[1], cb[3] - p[1]
-                side, dist, dim = min(
-                    [("left", dl, w), ("right", dr, w), ("top", dt, h), ("bottom", db, h)],
-                    key=lambda t: t[1])
-                req = CLOUD_INSET_FRAC * dim
-                if dist < req:
-                    bad.append(f"wire {e.id} endpoint ({p[0]:.0f},{p[1]:.0f}) is only {dist:.0f}px "
-                               f"inside the {side} edge of cloud '{strip(cl.value) or '(unnamed)'}' "
-                               f"(need >= {req:.0f}px, {CLOUD_INSET_FRAC*100:.0f}% of that edge's "
-                               f"{'width' if side in ('left', 'right') else 'height'})")
-    log.check(not bad, 34, "Wire endpoints penetrate a cloud shape's fill, not just its bounding box", bad)
+                if len(pts) < 2:
+                    continue
+                adj = pts[idx - 1] if idx == -1 else pts[1]
+                ax, ay = adj
+                if ax < cb[0] - TOL:
+                    side, axis_val = "left", p[1]
+                elif ax > cb[2] + TOL:
+                    side, axis_val = "right", p[1]
+                elif ay < cb[1] - TOL:
+                    side, axis_val = "top", p[0]
+                elif ay > cb[3] + TOL:
+                    side, axis_val = "bottom", p[0]
+                else:
+                    continue
+                if side == "left":
+                    bound = cb[0] + _cloud_lerp(CLOUD_LEFT, (axis_val - cb[1]) / h) * w
+                    ok = p[0] >= bound + CLOUD_MARGIN - TOL
+                elif side == "right":
+                    bound = cb[0] + _cloud_lerp(CLOUD_RIGHT, (axis_val - cb[1]) / h) * w
+                    ok = p[0] <= bound - CLOUD_MARGIN + TOL
+                elif side == "top":
+                    bound = cb[1] + _cloud_lerp(CLOUD_TOP, (axis_val - cb[0]) / w) * h
+                    ok = p[1] >= bound + CLOUD_MARGIN - TOL
+                else:
+                    bound = cb[1] + _cloud_lerp(CLOUD_BOTTOM, (axis_val - cb[0]) / w) * h
+                    ok = p[1] <= bound - CLOUD_MARGIN + TOL
+                if not ok:
+                    bad.append(f"wire {e.id} endpoint ({p[0]:.0f},{p[1]:.0f}) does not reach the "
+                               f"measured {side} silhouette (boundary ~{bound:.0f}px) of cloud "
+                               f"'{strip(cl.value) or '(unnamed)'}' -- {'increase' if side in ('left', 'top') else 'decrease'} "
+                               f"the {'x' if side in ('left', 'right') else 'y'} coordinate")
+    log.check(not bad, 34, "Wire endpoints reach a cloud shape's measured silhouette, not just its bounding box", bad)
 
     passed = log.total - log.fail
     print(f"\n{'ALL %d CHECKS PASSED' % log.total if log.fail == 0 else f'{log.fail}/{log.total} CHECKS FAILED'}")

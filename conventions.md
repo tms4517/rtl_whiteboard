@@ -87,16 +87,22 @@ visible.
 ### Arrows
 
 0. The built-in drawio "cloud" shape (`shape=cloud`) renders a scalloped
-   silhouette that is INSET from its own rectangular bounding box -- a wire
-   routed to land exactly on the cloud's bbox edge (the usual rule for every
-   other shape) will visibly stop short of the actual outline and look
-   disconnected. For a cloud specifically, route the wire's endpoint to
-   penetrate AT LEAST 20% of the approached edge's width/height into the
-   bbox (25-30% is a safer target), using an absolute floating point
-   (`sourcePoint`/`targetPoint`, no `source`/`target` cell reference or
-   `entryX`/`entryY`/`exitX`/`exitY`) rather than a perimeter-relative
-   connection, since drawio resolves `entryX`/`entryY` against the
-   rectangular bbox and will reproduce the same gap.
+   silhouette that is INSET from its own rectangular bounding box, and the
+   depth of that inset varies a LOT by position -- deep near the top/bottom
+   "valleys" between bumps, shallow at the bump peaks near the vertical/
+   horizontal midline. There is NO single safe percentage: too shallow a
+   wire leaves a visible gap at the valleys; too deep makes the arrowhead
+   look like it is floating INSIDE the cloud's fill at the peaks. Use an
+   absolute floating point (`sourcePoint`/`targetPoint`, no `source`/
+   `target` cell reference or `entryX`/`entryY`/`exitX`/`exitY` -- drawio
+   resolves those against the rectangular bbox and reproduces the gap) and
+   run `tools/verify_diagram.py`, whose check 34 computes the cloud's TRUE
+   measured silhouette (sampled empirically by rendering an isolated cloud
+   and scanning its pixels) and tells you exactly how far in your endpoint
+   needs to sit for THAT specific height/width position — trust that number,
+   not a rule of thumb. ALWAYS render and eyeball the PNG afterward too: a
+   passing check only confirms "far enough", visual inspection confirms it
+   isn't needlessly far.
 1. Arrows must alway be sharp (90 degrees).
 2. Arrows must always be either 0 degrees flat or 90 degrees upright.
 3. Arrows must have a black font.

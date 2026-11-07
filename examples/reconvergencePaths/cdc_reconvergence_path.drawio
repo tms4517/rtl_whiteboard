@@ -1,0 +1,445 @@
+<mxfile host="rtl-whiteboard" type="device">
+    <diagram id="reconv" name="intr_out-reconvergence">
+        <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1760" pageHeight="1320" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+
+                <mxCell id="mod" parent="1" style="rounded=1;arcSize=5;absoluteArcSize=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=monospace;fontSize=10;fontStyle=1;" value="top_core" vertex="1">
+                    <mxGeometry height="1260" width="1700" x="20" y="20" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="dom0" parent="1" style="rounded=1;arcSize=5;absoluteArcSize=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=none;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=monospace;fontSize=10;" value="clk_0 domain" vertex="1">
+                    <mxGeometry height="270" width="460" x="60" y="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom1" parent="1" style="rounded=1;arcSize=5;absoluteArcSize=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=none;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=monospace;fontSize=10;" value="clk_1 domain" vertex="1">
+                    <mxGeometry height="270" width="460" x="60" y="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom2" parent="1" style="rounded=1;arcSize=5;absoluteArcSize=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=none;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=monospace;fontSize=10;" value="clk_2 domain" vertex="1">
+                    <mxGeometry height="270" width="460" x="60" y="650" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom3" parent="1" style="rounded=1;arcSize=5;absoluteArcSize=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=none;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=monospace;fontSize=10;" value="clk_3 domain" vertex="1">
+                    <mxGeometry height="270" width="460" x="60" y="950" as="geometry"/>
+                </mxCell>
+                <mxCell id="domIC" parent="1" style="rounded=1;arcSize=5;absoluteArcSize=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=none;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=monospace;fontSize=10;" value="clk_dst domain" vertex="1">
+                    <mxGeometry height="1200" width="1030" x="650" y="40" as="geometry"/>
+                </mxCell>
+
+                <!-- Port0 sync_bit boxes -->
+                <mxCell id="d0box" parent="1" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=monospace;fontSize=10;verticalAlign=top;align=right;spacingRight=6;spacingTop=4;" value="&lt;b&gt;sync_bit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;3-FF sync&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:7px&quot;&gt;dest: clk_dst&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="90" width="170" x="140" y="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="d0rawin" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=left;verticalAlign=middle;labelBackgroundColor=none;" value="raw_input" vertex="1">
+                    <mxGeometry height="12" width="56" x="146" y="121" as="geometry"/>
+                </mxCell>
+                <mxCell id="d0syncout" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=right;verticalAlign=middle;labelBackgroundColor=none;" value="sync_out" vertex="1">
+                    <mxGeometry height="12" width="56" x="248" y="121" as="geometry"/>
+                </mxCell>
+                <mxCell id="d0inst" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;fontStyle=2;" value="gen_sync[0].u_a_sync" vertex="1">
+                    <mxGeometry height="12" width="170" x="140" y="169" as="geometry"/>
+                </mxCell>
+                <mxCell id="m0box" parent="1" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=monospace;fontSize=10;verticalAlign=top;align=right;spacingRight=6;spacingTop=4;" value="&lt;b&gt;sync_bit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;3-FF sync&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:7px&quot;&gt;dest: clk_dst&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="90" width="170" x="140" y="195" as="geometry"/>
+                </mxCell>
+                <mxCell id="m0rawin" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=left;verticalAlign=middle;labelBackgroundColor=none;" value="raw_input" vertex="1">
+                    <mxGeometry height="12" width="56" x="146" y="241" as="geometry"/>
+                </mxCell>
+                <mxCell id="m0syncout" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=right;verticalAlign=middle;labelBackgroundColor=none;" value="sync_out" vertex="1">
+                    <mxGeometry height="12" width="56" x="248" y="241" as="geometry"/>
+                </mxCell>
+                <mxCell id="m0inst" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;fontStyle=2;" value="gen_sync[0].u_b_sync" vertex="1">
+                    <mxGeometry height="12" width="170" x="140" y="289" as="geometry"/>
+                </mxCell>
+
+                <!-- Port1 sync_bit boxes -->
+                <mxCell id="d1box" parent="1" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=monospace;fontSize=10;verticalAlign=top;align=right;spacingRight=6;spacingTop=4;" value="&lt;b&gt;sync_bit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;3-FF sync&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:7px&quot;&gt;dest: clk_dst&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="90" width="170" x="140" y="375" as="geometry"/>
+                </mxCell>
+                <mxCell id="d1rawin" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=left;verticalAlign=middle;labelBackgroundColor=none;" value="raw_input" vertex="1">
+                    <mxGeometry height="12" width="56" x="146" y="421" as="geometry"/>
+                </mxCell>
+                <mxCell id="d1syncout" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=right;verticalAlign=middle;labelBackgroundColor=none;" value="sync_out" vertex="1">
+                    <mxGeometry height="12" width="56" x="248" y="421" as="geometry"/>
+                </mxCell>
+                <mxCell id="d1inst" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;fontStyle=2;" value="gen_sync[1].u_a_sync" vertex="1">
+                    <mxGeometry height="12" width="170" x="140" y="469" as="geometry"/>
+                </mxCell>
+                <mxCell id="m1box" parent="1" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=monospace;fontSize=10;verticalAlign=top;align=right;spacingRight=6;spacingTop=4;" value="&lt;b&gt;sync_bit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;3-FF sync&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:7px&quot;&gt;dest: clk_dst&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="90" width="170" x="140" y="495" as="geometry"/>
+                </mxCell>
+                <mxCell id="m1rawin" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=left;verticalAlign=middle;labelBackgroundColor=none;" value="raw_input" vertex="1">
+                    <mxGeometry height="12" width="56" x="146" y="541" as="geometry"/>
+                </mxCell>
+                <mxCell id="m1syncout" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=right;verticalAlign=middle;labelBackgroundColor=none;" value="sync_out" vertex="1">
+                    <mxGeometry height="12" width="56" x="248" y="541" as="geometry"/>
+                </mxCell>
+                <mxCell id="m1inst" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;fontStyle=2;" value="gen_sync[1].u_b_sync" vertex="1">
+                    <mxGeometry height="12" width="170" x="140" y="589" as="geometry"/>
+                </mxCell>
+
+                <!-- Port2 sync_bit boxes -->
+                <mxCell id="d2box" parent="1" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=monospace;fontSize=10;verticalAlign=top;align=right;spacingRight=6;spacingTop=4;" value="&lt;b&gt;sync_bit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;3-FF sync&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:7px&quot;&gt;dest: clk_dst&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="90" width="170" x="140" y="675" as="geometry"/>
+                </mxCell>
+                <mxCell id="d2rawin" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=left;verticalAlign=middle;labelBackgroundColor=none;" value="raw_input" vertex="1">
+                    <mxGeometry height="12" width="56" x="146" y="721" as="geometry"/>
+                </mxCell>
+                <mxCell id="d2syncout" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=right;verticalAlign=middle;labelBackgroundColor=none;" value="sync_out" vertex="1">
+                    <mxGeometry height="12" width="56" x="248" y="721" as="geometry"/>
+                </mxCell>
+                <mxCell id="d2inst" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;fontStyle=2;" value="gen_sync[2].u_a_sync" vertex="1">
+                    <mxGeometry height="12" width="170" x="140" y="769" as="geometry"/>
+                </mxCell>
+                <mxCell id="m2box" parent="1" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=monospace;fontSize=10;verticalAlign=top;align=right;spacingRight=6;spacingTop=4;" value="&lt;b&gt;sync_bit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;3-FF sync&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:7px&quot;&gt;dest: clk_dst&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="90" width="170" x="140" y="795" as="geometry"/>
+                </mxCell>
+                <mxCell id="m2rawin" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=left;verticalAlign=middle;labelBackgroundColor=none;" value="raw_input" vertex="1">
+                    <mxGeometry height="12" width="56" x="146" y="841" as="geometry"/>
+                </mxCell>
+                <mxCell id="m2syncout" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=right;verticalAlign=middle;labelBackgroundColor=none;" value="sync_out" vertex="1">
+                    <mxGeometry height="12" width="56" x="248" y="841" as="geometry"/>
+                </mxCell>
+                <mxCell id="m2inst" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;fontStyle=2;" value="gen_sync[2].u_b_sync" vertex="1">
+                    <mxGeometry height="12" width="170" x="140" y="889" as="geometry"/>
+                </mxCell>
+
+                <!-- Port3 sync_bit boxes -->
+                <mxCell id="d3box" parent="1" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=monospace;fontSize=10;verticalAlign=top;align=right;spacingRight=6;spacingTop=4;" value="&lt;b&gt;sync_bit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;3-FF sync&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:7px&quot;&gt;dest: clk_dst&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="90" width="170" x="140" y="975" as="geometry"/>
+                </mxCell>
+                <mxCell id="d3rawin" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=left;verticalAlign=middle;labelBackgroundColor=none;" value="raw_input" vertex="1">
+                    <mxGeometry height="12" width="56" x="146" y="1021" as="geometry"/>
+                </mxCell>
+                <mxCell id="d3syncout" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=right;verticalAlign=middle;labelBackgroundColor=none;" value="sync_out" vertex="1">
+                    <mxGeometry height="12" width="56" x="248" y="1021" as="geometry"/>
+                </mxCell>
+                <mxCell id="d3inst" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;fontStyle=2;" value="gen_sync[3].u_a_sync" vertex="1">
+                    <mxGeometry height="12" width="170" x="140" y="1069" as="geometry"/>
+                </mxCell>
+                <mxCell id="m3box" parent="1" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=monospace;fontSize=10;verticalAlign=top;align=right;spacingRight=6;spacingTop=4;" value="&lt;b&gt;sync_bit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;3-FF sync&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:7px&quot;&gt;dest: clk_dst&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="90" width="170" x="140" y="1095" as="geometry"/>
+                </mxCell>
+                <mxCell id="m3rawin" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=left;verticalAlign=middle;labelBackgroundColor=none;" value="raw_input" vertex="1">
+                    <mxGeometry height="12" width="56" x="146" y="1141" as="geometry"/>
+                </mxCell>
+                <mxCell id="m3syncout" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=right;verticalAlign=middle;labelBackgroundColor=none;" value="sync_out" vertex="1">
+                    <mxGeometry height="12" width="56" x="248" y="1141" as="geometry"/>
+                </mxCell>
+                <mxCell id="m3inst" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;fontStyle=2;" value="gen_sync[3].u_b_sync" vertex="1">
+                    <mxGeometry height="12" width="170" x="140" y="1189" as="geometry"/>
+                </mxCell>
+
+                <!-- Stage 1 OR gates: a_sync OR b_sync per port -->
+                <mxCell id="g1_0" parent="1" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.logic_gates.logic_gate;operation=or;" value="" vertex="1">
+                    <mxGeometry height="40" width="40" x="760" y="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="g1_1" parent="1" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.logic_gates.logic_gate;operation=or;" value="" vertex="1">
+                    <mxGeometry height="40" width="40" x="760" y="460" as="geometry"/>
+                </mxCell>
+                <mxCell id="g1_2" parent="1" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.logic_gates.logic_gate;operation=or;" value="" vertex="1">
+                    <mxGeometry height="40" width="40" x="760" y="760" as="geometry"/>
+                </mxCell>
+                <mxCell id="g1_3" parent="1" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.logic_gates.logic_gate;operation=or;" value="" vertex="1">
+                    <mxGeometry height="40" width="40" x="760" y="1060" as="geometry"/>
+                </mxCell>
+
+                <!-- Stage 2 OR gates: pair ports (0,1) and (2,3) -->
+                <mxCell id="g2a" parent="1" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.logic_gates.logic_gate;operation=or;" value="" vertex="1">
+                    <mxGeometry height="40" width="40" x="1000" y="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="g2b" parent="1" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.logic_gates.logic_gate;operation=or;" value="" vertex="1">
+                    <mxGeometry height="40" width="40" x="1000" y="910" as="geometry"/>
+                </mxCell>
+
+                <!-- Stage 3 OR gate: final combine -> intr_out -->
+                <mxCell id="g3" parent="1" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.logic_gates.logic_gate;operation=or;" value="" vertex="1">
+                    <mxGeometry height="40" width="40" x="1300" y="610" as="geometry"/>
+                </mxCell>
+
+                <!-- Input wires: raw pulse_in bits entering from module boundary -->
+                <mxCell id="inD0" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="20" y="120" as="sourcePoint"/>
+                        <mxPoint x="140" y="120" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="inM0" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="20" y="240" as="sourcePoint"/>
+                        <mxPoint x="140" y="240" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="inD1" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="20" y="420" as="sourcePoint"/>
+                        <mxPoint x="140" y="420" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="inM1" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="20" y="540" as="sourcePoint"/>
+                        <mxPoint x="140" y="540" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="inD2" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="20" y="720" as="sourcePoint"/>
+                        <mxPoint x="140" y="720" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="inM2" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="20" y="840" as="sourcePoint"/>
+                        <mxPoint x="140" y="840" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="inD3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="20" y="1020" as="sourcePoint"/>
+                        <mxPoint x="140" y="1020" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="inM3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="20" y="1140" as="sourcePoint"/>
+                        <mxPoint x="140" y="1140" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <!-- sync_bit output -> Stage1 gate wires (jogged, distinct x per branch) -->
+                <mxCell id="wA0" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="690" y="120"/>
+                            <mxPoint x="690" y="170"/>
+                        </Array>
+                        <mxPoint x="310" y="120" as="sourcePoint"/>
+                        <mxPoint x="760" y="170" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wB0" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="710" y="240"/>
+                            <mxPoint x="710" y="190"/>
+                        </Array>
+                        <mxPoint x="310" y="240" as="sourcePoint"/>
+                        <mxPoint x="760" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wA1" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="690" y="420"/>
+                            <mxPoint x="690" y="470"/>
+                        </Array>
+                        <mxPoint x="310" y="420" as="sourcePoint"/>
+                        <mxPoint x="760" y="470" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wB1" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="710" y="540"/>
+                            <mxPoint x="710" y="490"/>
+                        </Array>
+                        <mxPoint x="310" y="540" as="sourcePoint"/>
+                        <mxPoint x="760" y="490" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wA2" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="690" y="720"/>
+                            <mxPoint x="690" y="770"/>
+                        </Array>
+                        <mxPoint x="310" y="720" as="sourcePoint"/>
+                        <mxPoint x="760" y="770" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wB2" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="710" y="840"/>
+                            <mxPoint x="710" y="790"/>
+                        </Array>
+                        <mxPoint x="310" y="840" as="sourcePoint"/>
+                        <mxPoint x="760" y="790" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wA3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="690" y="1020"/>
+                            <mxPoint x="690" y="1070"/>
+                        </Array>
+                        <mxPoint x="310" y="1020" as="sourcePoint"/>
+                        <mxPoint x="760" y="1070" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wB3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="710" y="1140"/>
+                            <mxPoint x="710" y="1090"/>
+                        </Array>
+                        <mxPoint x="310" y="1140" as="sourcePoint"/>
+                        <mxPoint x="760" y="1090" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <!-- Stage1 -> Stage2 wires -->
+                <mxCell id="wC" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="900" y="180"/>
+                            <mxPoint x="900" y="320"/>
+                        </Array>
+                        <mxPoint x="800" y="180" as="sourcePoint"/>
+                        <mxPoint x="1000" y="320" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wD" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="950" y="480"/>
+                            <mxPoint x="950" y="340"/>
+                        </Array>
+                        <mxPoint x="800" y="480" as="sourcePoint"/>
+                        <mxPoint x="1000" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wE" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="900" y="780"/>
+                            <mxPoint x="900" y="920"/>
+                        </Array>
+                        <mxPoint x="800" y="780" as="sourcePoint"/>
+                        <mxPoint x="1000" y="920" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wF" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="950" y="1080"/>
+                            <mxPoint x="950" y="940"/>
+                        </Array>
+                        <mxPoint x="800" y="1080" as="sourcePoint"/>
+                        <mxPoint x="1000" y="940" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <!-- Stage2 -> Stage3 wires -->
+                <mxCell id="wG" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1200" y="330"/>
+                            <mxPoint x="1200" y="620"/>
+                        </Array>
+                        <mxPoint x="1040" y="330" as="sourcePoint"/>
+                        <mxPoint x="1300" y="620" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wH" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1220" y="930"/>
+                            <mxPoint x="1220" y="640"/>
+                        </Array>
+                        <mxPoint x="1040" y="930" as="sourcePoint"/>
+                        <mxPoint x="1300" y="640" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <!-- Final wire: Stage3 output -> module boundary (intr_out) -->
+                <mxCell id="wFinal" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;jumpStyle=arc;jumpSize=10;" value="">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1340" y="630" as="sourcePoint"/>
+                        <mxPoint x="1720" y="630" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <!-- Net name labels: input pulse_in bits -->
+                <mxCell id="lblInD0" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="pulse_in" vertex="1">
+                    <mxGeometry height="10" width="105" x="22" y="107" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblInM0" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="pulse_in" vertex="1">
+                    <mxGeometry height="10" width="105" x="22" y="227" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblInD1" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="pulse_in" vertex="1">
+                    <mxGeometry height="10" width="105" x="22" y="407" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblInM1" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="pulse_in" vertex="1">
+                    <mxGeometry height="10" width="105" x="22" y="527" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblInD2" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="pulse_in" vertex="1">
+                    <mxGeometry height="10" width="105" x="22" y="707" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblInM2" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="pulse_in" vertex="1">
+                    <mxGeometry height="10" width="105" x="22" y="827" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblInD3" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="pulse_in" vertex="1">
+                    <mxGeometry height="10" width="105" x="22" y="1007" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblInM3" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="pulse_in" vertex="1">
+                    <mxGeometry height="10" width="105" x="22" y="1127" as="geometry"/>
+                </mxCell>
+
+                <!-- Net name labels: synchronized outputs -->
+                <mxCell id="lblSyncD0" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="a_sync" vertex="1">
+                    <mxGeometry height="10" width="60" x="330" y="107" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblSyncM0" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="b_sync" vertex="1">
+                    <mxGeometry height="10" width="60" x="330" y="227" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblSyncD1" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="a_sync" vertex="1">
+                    <mxGeometry height="10" width="60" x="330" y="407" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblSyncM1" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="b_sync" vertex="1">
+                    <mxGeometry height="10" width="60" x="330" y="527" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblSyncD2" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="a_sync" vertex="1">
+                    <mxGeometry height="10" width="60" x="330" y="707" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblSyncM2" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="b_sync" vertex="1">
+                    <mxGeometry height="10" width="60" x="330" y="827" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblSyncD3" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="a_sync" vertex="1">
+                    <mxGeometry height="10" width="60" x="330" y="1007" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblSyncM3" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="b_sync" vertex="1">
+                    <mxGeometry height="10" width="60" x="330" y="1127" as="geometry"/>
+                </mxCell>
+
+                <!-- Net name labels: stage1 OR outputs -->
+                <mxCell id="lblStage1_0" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="src0_pending" vertex="1">
+                    <mxGeometry height="10" width="120" x="810" y="167" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblStage1_1" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="src1_pending" vertex="1">
+                    <mxGeometry height="10" width="120" x="810" y="467" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblStage1_2" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="src2_pending" vertex="1">
+                    <mxGeometry height="10" width="120" x="810" y="767" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblStage1_3" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="src3_pending" vertex="1">
+                    <mxGeometry height="10" width="120" x="810" y="1067" as="geometry"/>
+                </mxCell>
+
+                <!-- Net name labels: stage2 OR outputs -->
+                <mxCell id="lblStage2a" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="src01_pending" vertex="1">
+                    <mxGeometry height="10" width="130" x="1050" y="317" as="geometry"/>
+                </mxCell>
+                <mxCell id="lblStage2b" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="src23_pending" vertex="1">
+                    <mxGeometry height="10" width="130" x="1050" y="917" as="geometry"/>
+                </mxCell>
+
+                <!-- Final net name label -->
+                <mxCell id="lblFinal" parent="1" style="text;html=1;fontFamily=monospace;fontSize=8;align=center;verticalAlign=middle;labelBackgroundColor=none;" value="intr_out" vertex="1">
+                    <mxGeometry height="10" width="110" x="1500" y="617" as="geometry"/>
+                </mxCell>
+
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -219,6 +219,26 @@ To clearly show logic belonging to a different clock domain:
 3. The rounded rectangles should not have a border - this is to distinguish it
    from modules.
 
+## Module-boundary provenance patch
+
+When inline logic (a comb cloud, FF, gate reconvergence tree, counter, etc.)
+belongs to a real RTL module but is NOT itself a submodule instance (see
+Modules rule 2 — never box inline logic as if it were an instance), you may
+still show which module's source file it lives in with a colour patch:
+
+1. Use a rounded rectangle, arc size 5, same as other containers.
+2. Give it a dashed border (`dashed=1`) and a unique light fill colour —
+   this is the ONLY kind of non-outer-module container allowed a border, and
+   the dash is what keeps it visually distinct from both a borderless CDC
+   domain patch and a solid-border real submodule-instance box.
+3. Label it with the real RTL module name, top-right, 10px — same as any
+   other module label (never an invented descriptive phrase).
+4. Size the patch so it encloses only the shapes that belong to that module;
+   position it so its own centre point does not fall inside any shape it is
+   NOT meant to enclose (otherwise that shape gets misclassified as a nested
+   container and check 19 flags it for having a border it wasn't designed to
+   carry).
+
 ## Drawio style reference
 
 The self-review step renders with headless Drawio, which draws only core mxGraph
@@ -243,6 +263,9 @@ fallback (all white fill, black border):
 - Module box: `rounded=1;arcSize=5;` + unique `fillColor` + dark `strokeColor`,
   name top-left 10px
 - Clock-domain / CDC group: `rounded=1;arcSize=5;strokeColor=none;` (borderless)
+- Module-boundary provenance patch (inline logic owned by a real module, not
+  a submodule instance): `rounded=1;arcSize=5;dashed=1;` + unique light
+  `fillColor` + matching darker `strokeColor`, name top-right 10px
 - Fanout junction dot: `ellipse;fillColor=#000000;strokeColor=#000000;` ~8x8
 
 Net (edge) styles — keep wires orthogonal with

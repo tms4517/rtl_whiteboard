@@ -452,15 +452,20 @@ def run(path):
             bad.append(f"primitive {tuple(round(v) for v in bbox(s))} stroke {st}")
     log.check(not bad, 18, "Primitives have a white fill and black border", bad)
 
-    # 19 containers rounded (arcSize=5); CDC domains borderless
+    # 19 containers rounded (arcSize=5); CDC domains borderless (a module-boundary
+    # provenance patch -- inline logic grouped under the RTL module it lives in,
+    # NOT a real submodule instance -- is exempt if dashed=1, so it stays visually
+    # distinct from both a borderless CDC domain and a solid-border real module box)
     bad = []
     for cont in conts:
         if "rounded=1" not in cont.style:
             bad.append(f"container '{cont.value}' is not a rounded rectangle")
         elif sattr(cont.style, "arcSize") != "5":
             bad.append(f"container '{cont.value}' arcSize={sattr(cont.style, 'arcSize')} (need 5)")
-        if cont is not mod and sattr(cont.style, "strokeColor") != "none":
-            bad.append(f"CDC domain '{cont.value}' has a border (should be borderless)")
+        if (cont is not mod and sattr(cont.style, "strokeColor") != "none"
+                and sattr(cont.style, "dashed") != "1"):
+            bad.append(f"CDC domain '{cont.value}' has a solid border "
+                        "(should be borderless, or dashed=1 if a module-boundary patch)")
     log.check(not bad, 19, "Containers are rounded (arcSize=5); CDC domains borderless", bad)
 
     # 20 module/instance names top-right, 10px
